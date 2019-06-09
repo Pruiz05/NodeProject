@@ -1,0 +1,19 @@
+{
+  "name": "nodeproject",
+  "version": "1.0.1",
+  "description": "Project with node js and mongo db (for skill testing)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pedro Luis",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.3.3",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "mongoose": "^5.5.12",
+    "pug": "^2.0.3"
+  }
+}
