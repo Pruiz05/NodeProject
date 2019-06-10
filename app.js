@@ -12,7 +12,7 @@ const User = require("./models/user").User;
 //manejo de sesiones
 const session = require("express-session");
 //manejo de cookies
-const cookieSession =require("cookie-session");
+const cookieSession = require("cookie-session");
 //rutas modulares
 const router_app = require("./routes_app");
 
@@ -58,8 +58,8 @@ app.set("view engine", "pug");
 
 //middleware manejo de cookies
 app.use(cookieSession({
-    name:"session",
-    keys:["llave-1","llave-2"]
+    name: "session",
+    keys: ["llave-1", "llave-2"]
 }));
 
 
@@ -125,14 +125,17 @@ app.post("/sessions", (req, res) => {
         password: req.body.password
     }, (err, user) => {
         //console.log(user);
-        if(err){
+        if (err) {
             console.log(err);
             res.redirect("/app");
         }
-        //se asigna valor a una ariable de sesion
-        req.session.user_id = user._id;
-        res.redirect("/app");
-        //res.send("Hola Mundo");
+        else {
+            //se asigna valor a una ariable de sesion
+            req.session.user_id = user._id;
+            res.redirect("/app");
+            //res.send("Hola Mundo");
+        }
+
     });
 });
 

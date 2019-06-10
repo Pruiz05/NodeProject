@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 //connection to database
-mongoose.connect("mongodb://localhost/fotos");
+mongoose.connect("mongodb://localhost:27017/fotos");
 
 //expresiones regulares
 var email_match =[/^[A-Z]{1,2}\s\d{4}\s([B-D]|[F-H]|[J-N]|[P-T]|[V-Z]){3}$/];
@@ -21,11 +21,11 @@ var user_schema = new Schema({
     username: {type: String, required:true, maxlength: [50,"El usuario es muy grande"]},
     password: {type: String, 
         required:true, 
-        minlength: [5,"La contraseña es muy corta"],
-        validate: valida_pass
+        minlength: [5,"La contraseña es muy corta"]//,
+        //validate: valida_pass
     },
     age: {type: Number, min:[5,"La edad no puede ser menor que 5"], max:[100, "La edad no puede ser mayor que 100"]},
-    email: {type: String, required: "El correo es obligatorio", match:email_match},//validaciones 
+    email: {type: String, required: "El correo es obligatorio"},//validaciones 
     date_of_birth: Date
 });
 
