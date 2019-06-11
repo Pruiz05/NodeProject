@@ -1,0 +1,21 @@
+extends ../../layout.pug
+block contenido
+    div(class="container")
+        table(class="table table-striped")
+            thead(class="thead-dark")
+                tr
+                    th Nombre
+                    th 
+            tbody
+                for image in images    
+                    tr 
+                        td 
+                            p=image.title 
+                        td(class="text-center")
+                            -var cod = image.id
+                            a(href="/app/images/"+cod+"/edit", class="right-space") Editar
+                            a(href="/app/images/"+cod+"") Eliminar
+            
+
+
+

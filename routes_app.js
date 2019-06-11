@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 /*  app.com/app/  */
-router.get("/", (req, res)=>{
+router.get("/", (req, res) => {
     //buscar el usuario logeado
     //redirecciona a la pantalla principal
     res.render("app/home");
@@ -12,54 +12,83 @@ router.get("/", (req, res)=>{
 
 /* REST */
 
-router.get("/images/new", (req, res)=>{
+router.get("/images/new", (req, res) => {
     res.render("app/images/new")
 });
 
 
-router.get("/images/:id/edit", (req, res)=>{
-    
+router.get("/images/:id/edit", (req, res) => {
+    Images.findById(req.params.id, (err, _image) => {
+        if (!err) {
+            res.render("app/images/edit", { image: _image });
+        } else {
+            res.render(err);
+            return;
+        }
+    });
 });
 
 
 
 router.route("/images/:id")
-    .get((req, res)=>{
-        Images.findById(req.params.id, (err, image)=>{
+    .get((req, res) => {
+        Images.findById(req.params.id, (err, image) => {
             if (!err) {
-                res.render("app/images/show", {image:image})
+                res.render("app/images/show", { image: image })
             } else {
                 res.render(err);
             }
         });//acceder el id que viene de la url
-        
-    })
-    .put((req, res)=>{
 
     })
-    .delete((req, res)=>{
+    .put((req, res) => {
+        Images.findById(req.params.id, (err, image) => {
+            if (!err) {
+                //obtener campo del formulario
+                image.title = req.body.title;
+                image.save((err) => {
+                    if (!err) {
+                        res.render("app/images/show", { image: image })
+                    } else {
+                        res.render("app/images/"+ image.id+ "/edit", { image: image })
+                    }
+                });
+            } else {
+                res.render(err);
+            }
+        });
+    })
+    .delete((req, res) => {
 
     });
 
+//crud 
 router.route("/images")
-    .get((req, res)=>{
-
-    })
-    .post((req, res)=>{
-        var data = {
-            title:req.body.title
-        }
-        var image= new Images(data);
-
-        image.save((err)=>{
-            if(!err){
-                res.redirect("/app/images/"+image._id);
+    .get((req, res) => {
+        Images.find({}, (err, _imgs) => {
+            if (err) {
+                res.redirect("/app/home");
+                return;
             }
-            else{
+            res.render("app/images/index", { images: _imgs });
+        });
+    })
+    .post((req, res) => {
+        var data = {
+            title: req.body.title
+        }
+        var image = new Images(data);
+
+        image.save((err) => {
+            if (!err) {
+                res.redirect("/app/images/" + image._id);
+            }
+            else {
                 res.render(err);
+                return;
             }
         })
     });
 
 //export
-module.exports =router;
+module.exports = router;

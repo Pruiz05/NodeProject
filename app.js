@@ -19,6 +19,9 @@ const router_app = require("./routes_app");
 //session middlewares
 const session_middlewares = require("./middlewares/session")
 
+//sobrescribir methodos de los formularios -- middleware
+const methodOverride = require("method-override");
+
 
 //connection --------------------
 //mongoose.connect("mongodb://localhost/fotos");
@@ -42,6 +45,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));//true: hacer parsing de varios formatos
 
+app.use(methodOverride("_method"));
 
 //middleware views engines 
 app.set("view engine", "pug");
