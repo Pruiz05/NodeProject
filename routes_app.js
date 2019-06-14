@@ -1,6 +1,7 @@
 const express = require("express");
 const Images = require("./models/images");
 const router = express.Router();
+const image_finder_middlewares = require("./middlewares/find_image");
 
 
 /*  app.com/app/  */
@@ -15,6 +16,9 @@ router.get("/", (req, res) => {
 router.get("/images/new", (req, res) => {
     res.render("app/images/new")
 });
+
+//
+router.all("/imagenes/:id*", image_finder_middlewares);
 
 
 router.get("/images/:id/edit", (req, res) => {
