@@ -9,4 +9,14 @@
 .big-top-space{
     margin-top: 200px;
 }
+form.link{
+    display: inline-block;
 
+}
+
+form.link input[type="submit"]{
+    background-color: transparent;
+    text-decoration: none;
+    border: none;
+    color: red;
+}

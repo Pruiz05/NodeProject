@@ -32,6 +32,7 @@ router.get("/images/:id/edit", (req, res) => {
 
 router.route("/images/:id")
     .get((req, res) => {
+        //mostrar una imagen
         Images.findById(req.params.id, (err, image) => {
             if (!err) {
                 res.render("app/images/show", { image: image })
@@ -42,6 +43,7 @@ router.route("/images/:id")
 
     })
     .put((req, res) => {
+        //actualizar una imagen
         Images.findById(req.params.id, (err, image) => {
             if (!err) {
                 //obtener campo del formulario
@@ -50,7 +52,7 @@ router.route("/images/:id")
                     if (!err) {
                         res.render("app/images/show", { image: image })
                     } else {
-                        res.render("app/images/"+ image.id+ "/edit", { image: image })
+                        res.render("app/images/" + image.id + "/edit", { image: image })
                     }
                 });
             } else {
@@ -59,7 +61,15 @@ router.route("/images/:id")
         });
     })
     .delete((req, res) => {
-
+        //borrar una imagen
+        Image.findOneAndRemove({_id: req.params.id}, (err)=>{
+            if (!err) {
+                res.redirect("/app/images");
+            } else {
+                console.log(err);
+                res.redirect("/app/images"+req.params.id)
+            }
+        });
     });
 
 //crud 
