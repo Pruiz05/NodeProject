@@ -1,12 +1,14 @@
-const Image= require("../models/images");
+const Image = require("../models/images");
 module.exports = (req, res, next) => {
-    Image.findBy.id(req.params.id, ()=>{
+    Image.findById(req.params.id)
+        .populate("creator")
+        .exec((err, image) => {
         if (image != null) {
-            res.locals.image=image;
+            res.locals.image = image;
             next();
-        }else{
+        } else {
             res.redirect("/app");
         }
     });
-    
+
 }

@@ -14,7 +14,7 @@ block contenido
                         td(class="text-center")
                             -var cod = image.id
                             a(href="/app/images/"+cod+"/edit", class="right-space") Editar
-                            form(action="/app/imagenes/" + cod +"?_method=DELETE", class="link",method="POST")
+                            form(action="/app/images/" + cod +"?_method=DELETE", class="link",method="POST")
                                 input(type="submit", value="Eliminar")
                             //--a(href="/app/images/"+cod+"") Eliminar
             
