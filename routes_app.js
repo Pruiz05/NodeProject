@@ -60,7 +60,8 @@ router.route("/images/:id")
 //crud  
 router.route("/images")
     .get((req, res) => {
-        Images.find({creator:res.locals.user._id}, (err, _imgs) => {
+        //filtrando por el usuario conectado y las imagenes de ese usuario
+        Images.find({creator: res.locals.user._id}, (err, _imgs) => {
             if (err) {
                 res.redirect("/app/home");
                 return;
