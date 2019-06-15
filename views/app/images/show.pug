@@ -1,4 +1,6 @@
 extends ../../layout.pug
 block contenido
     h1= image.title
-    p Creado por #{image.creator.email}
+    //-
+    if(typeof image.creator != "undefined")
+        p Creado por #{image.creator.email}
