@@ -74,9 +74,12 @@ router.route("/images")
         // The name of the input field (i.e. "archivo") is used to retrieve the uploaded file
         let archivo = req.files.archivo;
 
+        var extension = req.files.archivo.name.split(".").pop();
+        //console.log(req.files);
         var data = {
             title: req.body.title,
-            creator: res.locals.user._id//acceder al usuario conectado
+            creator: res.locals.user._id,//acceder al usuario conectado
+            extension: extension
         }
         var image = new Images(data);
 
@@ -89,13 +92,15 @@ router.route("/images")
                 return;
             }
         })
-
+        
+        
         // Use the mv() method to place the file somewhere on your server
-        archivo.mv('C:/Users/PEDRO RUIZ DIAS/Documents/My Web Sites/NodeProject/assets/' + image._id +'.jpg', (err)=>{
+        archivo.mv('C:/Users/PEDRO RUIZ DIAS/Documents/My Web Sites/NodeProject/public/images/' + image._id +'.' + extension, (err)=>{
             if (err)
                 return res.status(500).send(err);
             
             //res.send('File uploaded!');
+            console.log("File Uploaded!");
         });
 
     });

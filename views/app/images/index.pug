@@ -9,10 +9,12 @@ block contenido
             tbody
                 for image in images    
                     tr 
+                        -var cod = image.id
                         td 
-                            p=image.title 
+                            -var ti =image.title 
+                            a(href="/app/images/"+ cod) #{image.title }
                         td(class="text-center")
-                            -var cod = image.id
+                            
                             a(href="/app/images/"+cod+"/edit", class="right-space") Editar
                             form(action="/app/images/" + cod +"?_method=DELETE", class="link",method="POST")
                                 input(type="submit", value="Eliminar")
