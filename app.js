@@ -1,12 +1,12 @@
 const express = require("express");
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 /*import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 */
 const app = express();
-const Schema = mongoose.Schema;
+//const Schema = mongoose.Schema;
 
 const User = require("./models/user").User;
 //manejo de sesiones
@@ -18,6 +18,12 @@ const router_app = require("./routes_app");
 
 //session middlewares
 const session_middlewares = require("./middlewares/session")
+
+//
+const formidable = require("express-formidable");
+
+//upload files 
+const fileUpload = require("express-fileupload");
 
 //sobrescribir methodos de los formularios -- middleware
 const methodOverride = require("method-override");
@@ -43,9 +49,36 @@ app.use("/public", express.static('public'));
 //leer parametros en las peticiones application/json
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }));//true: hacer parsing de varios formatos
+app.use(bodyParser.urlencoded({ useNewUrlParser: true }));//true: hacer parsing de varios formatos
 
 app.use(methodOverride("_method"));
+
+//middleware subir imagen
+app.use(fileUpload());
+
+
+
+//leyendo archivos en la app
+//app.use(formidable.parse({keepExtensions: true}));
+/*app.use(formidable({
+    encoding:'utf-8',
+    uploadDir:'/assets/',
+    multiples: true
+}));*/
+
+//app.use(formidable.parse({keepExtensions: true, uploadDir:"images"));
+/*app.use(formidable());
+var opts = {
+    encoding: 'utf-8',
+    uploadDir: '/my/dir',
+    multiples: true, // req.files to be arrays of files
+}
+ 
+app.post('/images', (req, res) => {
+  req.fields; // contains non-file fields
+  req.files; // contains files
+});*/
+
 
 //middleware views engines 
 app.set("view engine", "pug");
@@ -147,6 +180,26 @@ app.post("/sessions", (req, res) => {
 app.use("/app", session_middlewares);
 //
 app.use("/app", router_app);
+
+/*
+app.post('/app/images', (req, res)=>{
+    console.log(req);
+    if (Object.keys(req.files).length == 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+    
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      let sampleFile = req.files.archivo;
+    
+      // Use the mv() method to place the file somewhere on your server
+      sampleFile.mv('/assets/filename.jpg', function(err) {
+        if (err)
+          return res.status(500).send(err);
+    
+        res.send('File uploaded!');
+      });
+});
+*/
 
 //server
 app.listen(8080, function () {
