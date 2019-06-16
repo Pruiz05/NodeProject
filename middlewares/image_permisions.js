@@ -1,5 +1,6 @@
 const Images = require("../models/images");
 
+///validar si el usuario tiene permiso para ver, editar sus imagenes
 module.exports = (image, req, res)=>{
     //true = tiene permiso
     //false = no tiene permiso

@@ -3,7 +3,6 @@ const Images = require("./models/images");
 const router = express.Router();
 const image_finder_middlewares = require("./middlewares/find_image");
 
-
 /*  app.com/app/  */
 router.get("/", (req, res) => {
     //buscar el usuario logeado
@@ -12,7 +11,6 @@ router.get("/", (req, res) => {
 });
 
 /* REST */
-
 router.get("/images/new", (req, res) => {
     res.render("app/images/new")
 });
@@ -20,21 +18,17 @@ router.get("/images/new", (req, res) => {
 //middleware aplicado a todas las rutas
 router.all("/images/:id*", image_finder_middlewares);
 
-
 router.get("/images/:id/edit", (req, res) => {
     res.render("app/images/edit");
 });
 
-
-
 router.route("/images/:id")
     .get((req, res) => {
-        //mostrar una imagen
+        //mostrar una imagen redirigir a la vista 'Show'
         res.render("app/images/show");
     })
     .put((req, res) => {
         //actualizar una imagen
-
         res.locals.image.title = req.body.title;
         res.locals.image.save((err) => {
             if (!err) {
@@ -60,6 +54,7 @@ router.route("/images/:id")
 //crud  
 router.route("/images")
     .get((req, res) => {
+        //lista de imagenes creadas por el usuario
         //filtrando por el usuario conectado y las imagenes de ese usuario
         Images.find({ creator: res.locals.user._id }, (err, _imgs) => {
             if (err) {
@@ -70,18 +65,20 @@ router.route("/images")
         });
     })
     .post((req, res) => {
+        //subir imagen al servidor y data a la bd
+
         if (Object.keys(req.files).length == 0) {
             return res.status(400).send('No files were uploaded.');
         }
 
-        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-        let sampleFile = req.files.archivo;
+        // The name of the input field (i.e. "archivo") is used to retrieve the uploaded file
+        let archivo = req.files.archivo;
 
         // Use the mv() method to place the file somewhere on your server
-        sampleFile.mv('C:/Users/PEDRO RUIZ DIAS/Documents/My Web Sites/NodeProject/assets/' + req.body.title +'.jpg', function (err) {
+        archivo.mv('C:/Users/PEDRO RUIZ DIAS/Documents/My Web Sites/NodeProject/assets/' + req.body.title +'.jpg', (err)=>{
             if (err)
                 return res.status(500).send(err);
-
+            
             var data = {
                 title: req.body.title,
                 creator: res.locals.user._id//acceder al usuario conectado
