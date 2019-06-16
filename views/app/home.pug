@@ -1,3 +1,18 @@
 extends ../layout.pug
 block contenido
-    h5 Bienvenidos a la pagina #{user.email}
+    div(class="container")
+        //-justify-content-md-center
+        div(class="row") 
+            div(class="card-deck")
+                for image in images
+                    div(class="card")
+                        div(class="card-body")
+                            -var file =  image._id + "." + image.extension
+                            img(src="/public/images/"+ file, alt="imagen" class="card-img-top")
+                            div(class="card-body")
+                                h2(class="card-title")= image.title 
+                                h4=file
+                                if(typeof image.creator != "undefined")
+                                    p Creado por #{image.creator.email}           
+                br  
+        //--h5 Bienvenidos a la pagina #{user.email}

@@ -7,7 +7,13 @@ const image_finder_middlewares = require("./middlewares/find_image");
 router.get("/", (req, res) => {
     //buscar el usuario logeado
     //redirecciona a la pantalla principal
-    res.render("app/home");
+    //res.render("app/home");
+    Images.find({})
+        .populate("creator")
+        .exec((err, _images)=>{
+            if(err) console.log(err);
+            res.render("app/home", {images: _images})
+        })
 });
 
 /* REST */

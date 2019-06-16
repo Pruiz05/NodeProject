@@ -20,3 +20,16 @@ form.link input[type="submit"]{
     border: none;
     color: red;
 }
+
+.card-img-top {
+    width: 100%;
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+}
+img{
+    width: 400px;
+    height: 400px;
+}
+.container{
+    max-width: 80%;
+}

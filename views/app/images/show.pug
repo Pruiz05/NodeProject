@@ -1,10 +1,12 @@
 extends ../../layout.pug
 block contenido
-    h1= image.title
-    //-
-    -var file =  image._id + "." + image.extension
-    img(src="/public/images/"+ file, alt="imagen cargada")
-    h5="ruta: " + file
-    if(typeof image.creator != "undefined")
-        p Creado por #{image.creator.email}
-    p(class="alert") Imagen creada y guardada
+    div(class="container")
+        div(class="row justify-content-md-center")
+            div(class="card")
+                div(class="card-body")
+                    h1= image.title
+                    -var file =  image._id + "." + image.extension                
+                    h5="ruta: " + file
+                    if(typeof image.creator != "undefined")
+                        p Creado por #{image.creator.email}           
+                img(src="/public/images/"+ file, alt="imagen" class="card-img-top")
